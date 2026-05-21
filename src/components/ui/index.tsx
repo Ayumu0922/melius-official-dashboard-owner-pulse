@@ -63,7 +63,7 @@ export function SidebarShell({ children, ...props }: HTMLAttributes<HTMLElement>
   return (
     <aside
       {...props}
-      className="hidden h-screen w-72 shrink-0 flex-col overflow-hidden border-r border-zinc-950 bg-[#161512] text-stone-100 shadow-2xl shadow-zinc-950/10 dark:border-white/[0.10] dark:bg-[#11100e] md:flex"
+      className="hidden h-screen w-72 shrink-0 flex-col overflow-hidden border-r border-zinc-950/[0.14] bg-[#f8f6ef] text-zinc-950 shadow-2xl shadow-zinc-950/10 dark:border-white/[0.10] dark:bg-[#11100e] dark:text-stone-100 md:flex"
     >
       {children}
     </aside>
@@ -74,7 +74,7 @@ export function MobileDrawer({ children, ...props }: HTMLAttributes<HTMLElement>
   return (
     <aside
       {...props}
-      className="drawer-enter fixed inset-y-0 left-0 z-50 flex w-[min(19rem,calc(100vw-2rem))] flex-col border-r border-zinc-950 bg-[#161512] text-stone-100 shadow-xl shadow-zinc-950/30 dark:border-white/[0.10] dark:bg-[#11100e] md:hidden"
+      className="drawer-enter fixed inset-y-0 left-0 z-50 flex w-[min(19rem,calc(100vw-2rem))] flex-col border-r border-zinc-950/[0.14] bg-[#f8f6ef] text-zinc-950 shadow-xl shadow-zinc-950/30 dark:border-white/[0.10] dark:bg-[#11100e] dark:text-stone-100 md:hidden"
     >
       {children}
     </aside>
@@ -91,7 +91,7 @@ export function Overlay({ children, ...props }: HTMLAttributes<HTMLDivElement> &
 
 export function SidebarHeader({ children, ...props }: HTMLAttributes<HTMLDivElement> & ChildrenProps) {
   return (
-    <div {...props} className="flex min-h-20 items-center gap-3 border-b border-white/[0.10] px-4">
+    <div {...props} className="flex min-h-20 items-center gap-3 border-b border-zinc-950/[0.12] px-4 dark:border-white/[0.10]">
       {children}
     </div>
   );
@@ -112,7 +112,7 @@ export function BrandMark({ children, ...props }: HTMLAttributes<HTMLDivElement>
   return (
     <div
       {...props}
-      className="grid h-10 w-10 shrink-0 place-items-center rounded-md border border-emerald-300/[0.24] bg-emerald-300/[0.12] text-emerald-100 shadow-sm shadow-zinc-950/10"
+      className="grid h-10 w-10 shrink-0 place-items-center rounded-md border border-emerald-950/[0.18] bg-emerald-950 text-emerald-50 shadow-sm shadow-zinc-950/10 dark:border-emerald-300/[0.24] dark:bg-emerald-300/[0.12] dark:text-emerald-100"
     >
       {children}
     </div>
@@ -248,7 +248,7 @@ export function RowButton({ dataId, roleName, selected, onClick, children }: Sel
         data-melius-ui-role={roleName}
         aria-pressed="true"
         onClick={onClick}
-        className="flex min-h-10 w-full items-center justify-between rounded-md border border-emerald-300/[0.18] bg-emerald-300/[0.12] px-3 py-2 text-left text-sm font-bold text-white"
+        className="flex min-h-10 w-full items-center justify-between rounded-md border border-emerald-950/[0.18] bg-emerald-950 px-3 py-2 text-left text-sm font-bold text-white dark:border-emerald-300/[0.18] dark:bg-emerald-300/[0.12] dark:text-white"
       >
         {children}
       </button>
@@ -262,7 +262,7 @@ export function RowButton({ dataId, roleName, selected, onClick, children }: Sel
       data-melius-ui-role={roleName}
       aria-pressed="false"
       onClick={onClick}
-      className="flex min-h-10 w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm font-semibold text-stone-300 transition-colors hover:bg-white/[0.08] hover:text-white"
+      className="flex min-h-10 w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm font-semibold text-zinc-700 transition-colors hover:bg-zinc-950/[0.06] hover:text-zinc-950 dark:text-stone-300 dark:hover:bg-white/[0.08] dark:hover:text-white"
     >
       {children}
     </button>

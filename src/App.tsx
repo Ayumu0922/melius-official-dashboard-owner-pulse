@@ -1226,8 +1226,8 @@ function SidebarContent({
           <Wallet className="h-5 w-5" aria-hidden="true" />
         </BrandMark>
         <div className="min-w-0 flex-1">
-          <div className="truncate text-sm font-black text-white">{copy.appName}</div>
-          <div className="truncate text-xs font-semibold text-stone-400">{copy.appSubtitle}</div>
+          <div className="truncate text-sm font-black text-zinc-950 dark:text-white">{copy.appName}</div>
+          <div className="truncate text-xs font-semibold text-zinc-500 dark:text-stone-400">{copy.appSubtitle}</div>
         </div>
         {onCloseMobile ? (
           <IconButton dataId={`${idPrefix}-close`} roleName="button" label={copy.closeSidebar} onClick={onCloseMobile}>
@@ -1240,13 +1240,13 @@ function SidebarContent({
         <div
           data-melius-ui-id={`${idPrefix}-morning-status`}
           data-melius-ui-role="status"
-          className="rounded-md border border-white/[0.12] bg-white/[0.06] p-3"
+          className="rounded-md border border-zinc-950/[0.12] bg-white/[0.62] p-3 dark:border-white/[0.12] dark:bg-white/[0.06]"
         >
           <div className="flex items-center justify-between gap-3">
-            <div className="text-xs font-black uppercase tracking-[0.12em] text-stone-400">{copy.morningReview}</div>
+            <div className="text-xs font-black uppercase tracking-[0.12em] text-zinc-500 dark:text-stone-400">{copy.morningReview}</div>
             <StatusBadge tone="green">08:10</StatusBadge>
           </div>
-          <div className="mt-2 text-sm font-black text-white">{localized(language, 'Cash runway 74 days', '資金残 74日')}</div>
+          <div className="mt-2 text-sm font-black text-zinc-950 dark:text-white">{localized(language, 'Cash runway 74 days', '資金残 74日')}</div>
         </div>
       </div>
 
@@ -1293,7 +1293,7 @@ function SidebarContent({
                   <div
                     data-melius-ui-id={`${idPrefix}-${item.id}-children`}
                     data-melius-ui-role="navigation-group"
-                    className="ml-5 mt-1 space-y-1 border-l border-white/[0.12] pl-3"
+                    className="ml-5 mt-1 space-y-1 border-l border-zinc-950/[0.12] pl-3 dark:border-white/[0.12]"
                   >
                     {children.map((child, childIndex) => (
                       <button
@@ -1310,7 +1310,7 @@ function SidebarContent({
                           );
                           onCloseMobile?.();
                         }}
-                        className="block w-full rounded-md px-3 py-2 text-left text-sm font-semibold text-stone-400 transition-colors hover:bg-white/[0.08] hover:text-white"
+                        className="block w-full rounded-md px-3 py-2 text-left text-sm font-semibold text-zinc-600 transition-colors hover:bg-zinc-950/[0.06] hover:text-zinc-950 dark:text-stone-400 dark:hover:bg-white/[0.08] dark:hover:text-white"
                       >
                         {child}
                       </button>
@@ -1323,7 +1323,7 @@ function SidebarContent({
         </div>
       </nav>
 
-      <div data-melius-ui-id={`${idPrefix}-account`} data-melius-ui-role="account" className="border-t border-white/[0.10] p-3">
+      <div data-melius-ui-id={`${idPrefix}-account`} data-melius-ui-role="account" className="border-t border-zinc-950/[0.12] p-3 dark:border-white/[0.10]">
         <div className="space-y-1">
           <RowButton
             dataId={`${idPrefix}-settings`}
