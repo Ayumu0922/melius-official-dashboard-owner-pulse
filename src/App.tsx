@@ -1226,8 +1226,8 @@ function SidebarContent({
           <Wallet className="h-5 w-5" aria-hidden="true" />
         </BrandMark>
         <div className="min-w-0 flex-1">
-          <div className="truncate text-sm font-black text-zinc-950 dark:text-white">{copy.appName}</div>
-          <div className="truncate text-xs font-semibold text-zinc-500 dark:text-zinc-400">{copy.appSubtitle}</div>
+          <div className="truncate text-sm font-black text-white">{copy.appName}</div>
+          <div className="truncate text-xs font-semibold text-stone-400">{copy.appSubtitle}</div>
         </div>
         {onCloseMobile ? (
           <IconButton dataId={`${idPrefix}-close`} roleName="button" label={copy.closeSidebar} onClick={onCloseMobile}>
@@ -1240,13 +1240,13 @@ function SidebarContent({
         <div
           data-melius-ui-id={`${idPrefix}-morning-status`}
           data-melius-ui-role="status"
-          className="rounded-lg border border-zinc-950/[0.08] bg-white/[0.70] p-3 dark:border-white/[0.08] dark:bg-white/[0.06]"
+          className="rounded-md border border-white/[0.12] bg-white/[0.06] p-3"
         >
           <div className="flex items-center justify-between gap-3">
-            <div className="text-xs font-black uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400">{copy.morningReview}</div>
+            <div className="text-xs font-black uppercase tracking-[0.12em] text-stone-400">{copy.morningReview}</div>
             <StatusBadge tone="green">08:10</StatusBadge>
           </div>
-          <div className="mt-2 text-sm font-black text-zinc-950 dark:text-white">{localized(language, 'Cash runway 74 days', '資金残 74日')}</div>
+          <div className="mt-2 text-sm font-black text-white">{localized(language, 'Cash runway 74 days', '資金残 74日')}</div>
         </div>
       </div>
 
@@ -1293,7 +1293,7 @@ function SidebarContent({
                   <div
                     data-melius-ui-id={`${idPrefix}-${item.id}-children`}
                     data-melius-ui-role="navigation-group"
-                    className="ml-5 mt-1 space-y-1 border-l border-zinc-950/[0.08] pl-3 dark:border-white/[0.10]"
+                    className="ml-5 mt-1 space-y-1 border-l border-white/[0.12] pl-3"
                   >
                     {children.map((child, childIndex) => (
                       <button
@@ -1310,7 +1310,7 @@ function SidebarContent({
                           );
                           onCloseMobile?.();
                         }}
-                        className="block w-full rounded-lg px-3 py-2 text-left text-sm font-semibold text-zinc-500 transition-colors hover:bg-zinc-950/[0.05] hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-white/[0.09] dark:hover:text-white"
+                        className="block w-full rounded-md px-3 py-2 text-left text-sm font-semibold text-stone-400 transition-colors hover:bg-white/[0.08] hover:text-white"
                       >
                         {child}
                       </button>
@@ -1323,7 +1323,7 @@ function SidebarContent({
         </div>
       </nav>
 
-      <div data-melius-ui-id={`${idPrefix}-account`} data-melius-ui-role="account" className="border-t border-zinc-950/[0.08] p-3 dark:border-white/[0.08]">
+      <div data-melius-ui-id={`${idPrefix}-account`} data-melius-ui-role="account" className="border-t border-white/[0.10] p-3">
         <div className="space-y-1">
           <RowButton
             dataId={`${idPrefix}-settings`}
@@ -1341,7 +1341,7 @@ function SidebarContent({
             onClick={() => onUtilityAction(copy.userName, localized(language, 'Profile, role, and sample workspace plan details are ready for review.', 'プロフィール、権限、サンプルワークスペースのプランを確認できます。'), Users)}
           >
             <span className="flex min-w-0 items-center gap-3">
-              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-md bg-gradient-to-br from-zinc-950 to-stone-700 text-xs font-black text-white dark:from-stone-100 dark:to-emerald-100 dark:text-zinc-950">
+              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-md bg-emerald-200 text-xs font-black text-zinc-950">
                 OP
               </span>
               <span className="truncate">{copy.userName}</span>
@@ -1369,55 +1369,82 @@ function WorkspaceHero({
 }) {
   const header = copy.headers[tab];
   const metrics = [
-    { id: 'hero-month-revenue', label: localized(language, 'Revenue', '売上'), value: localized(language, '$128K', '1,284万') },
-    { id: 'hero-cash', label: localized(language, 'Cash', '現金'), value: localized(language, '$186K', '1,860万') },
-    { id: 'hero-alerts', label: localized(language, 'Alerts', '注意'), value: localized(language, '3', '3件') },
+    { id: 'hero-month-revenue', label: localized(language, 'Revenue booked', '売上計上'), value: localized(language, '$128K', '1,284万'), note: '+12.8%' },
+    { id: 'hero-cash', label: localized(language, 'Cash runway', '資金残日数'), value: localized(language, '74 days', '74日'), note: localized(language, 'stable', '安定') },
+    { id: 'hero-alerts', label: localized(language, 'Today focus', '今日の確認'), value: localized(language, '3 alerts', '3件'), note: localized(language, '2 urgent', '至急2件') },
   ];
 
   return (
     <section
       data-melius-ui-id="workspace-hero"
       data-melius-ui-role="hero"
-      className="hero-panel overflow-hidden rounded-lg border border-zinc-950/[0.08] bg-zinc-950 p-5 text-white shadow-xl shadow-zinc-950/10 dark:border-white/[0.10] dark:bg-black sm:p-6"
+      className="hero-panel overflow-hidden rounded-md border border-zinc-950/[0.16] bg-[#fbfaf5] shadow-[0_18px_60px_rgba(24,24,27,0.08)] dark:border-white/[0.10] dark:bg-[#171612]"
     >
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(17rem,22rem)] lg:items-center">
-        <div className="max-w-3xl space-y-3">
-          <StrongBadge>{header.badge}</StrongBadge>
-          <h2 data-melius-ui-id="hero-title" data-melius-ui-role="heading" className="text-2xl font-black leading-tight tracking-normal sm:text-3xl">
-            {header.title}
-          </h2>
-          <p data-melius-ui-id="hero-body" data-melius-ui-role="text" className="max-w-2xl text-sm font-medium leading-6 text-white/[0.76]">
-            {header.body}
-          </p>
-          <div data-melius-ui-id="hero-actions" data-melius-ui-role="actions" className="flex flex-wrap gap-2">
-            <button
-              type="button"
-              data-melius-ui-id="hero-primary-action"
-              data-melius-ui-role="button"
-              onClick={onPrimary}
-              className="inline-flex min-h-9 items-center justify-center rounded-lg bg-white px-3.5 py-2 text-sm font-black text-zinc-900 transition hover:bg-white/[0.90]"
-            >
-              {header.primary}
-            </button>
-            <button
-              type="button"
-              data-melius-ui-id="hero-secondary-action"
-              data-melius-ui-role="button"
-              onClick={onSecondary}
-              className="inline-flex min-h-9 items-center justify-center rounded-lg border border-white/[0.45] bg-white/[0.04] px-3.5 py-2 text-sm font-black text-white backdrop-blur transition hover:bg-white/[0.10]"
-            >
-              {header.secondary}
-            </button>
+      <div className="grid lg:grid-cols-[10rem_minmax(0,1fr)]">
+        <div
+          data-melius-ui-id="hero-date-strip"
+          data-melius-ui-role="status"
+          className="flex flex-row items-center justify-between gap-4 border-b border-zinc-950/[0.12] bg-[#191814] px-5 py-4 text-white dark:border-white/[0.10] lg:flex-col lg:items-start lg:justify-start lg:border-b-0 lg:border-r"
+        >
+          <div>
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-400">{localized(language, 'Owner log', '経営日誌')}</div>
+            <div className="mt-2 text-3xl font-black leading-none">08:10</div>
+          </div>
+          <div className="h-px flex-1 bg-white/[0.16] lg:w-full lg:flex-none" />
+          <div>
+            <div className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-200">{header.badge}</div>
+            <div className="mt-1 text-sm font-black">{copy.tabs[tab]}</div>
           </div>
         </div>
 
-        <div data-melius-ui-id="hero-status-panel" data-melius-ui-role="status" className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-          {metrics.map((metric, index) => (
-            <div key={metric.id} data-melius-ui-id={`hero-metric-${index + 1}`} data-melius-ui-role="metric" className="rounded-lg border border-white/[0.12] bg-white/[0.06] px-4 py-3 backdrop-blur">
-              <div className="text-xs font-bold uppercase tracking-[0.12em] text-white/[0.52]">{metric.label}</div>
-              <div className="mt-1 text-2xl font-black leading-none">{metric.value}</div>
+        <div className="p-5 sm:p-6">
+          <div className="grid gap-5 2xl:grid-cols-[minmax(0,1fr)_minmax(20rem,27rem)] 2xl:items-start">
+            <div className="space-y-4">
+              <StrongBadge>{localized(language, 'Morning operating sheet', '朝の経営シート')}</StrongBadge>
+              <div>
+                <h2 data-melius-ui-id="hero-title" data-melius-ui-role="heading" className="max-w-2xl text-3xl font-black leading-[1.03] tracking-normal text-zinc-950 dark:text-white sm:text-4xl">
+                  {header.title}
+                </h2>
+                <p data-melius-ui-id="hero-body" data-melius-ui-role="text" className="mt-3 max-w-2xl text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
+                  {header.body}
+                </p>
+              </div>
+              <div data-melius-ui-id="hero-actions" data-melius-ui-role="actions" className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  data-melius-ui-id="hero-primary-action"
+                  data-melius-ui-role="button"
+                  onClick={onPrimary}
+                  className="inline-flex min-h-10 items-center justify-center rounded-md bg-[#171612] px-4 py-2 text-sm font-black text-white transition hover:bg-emerald-900 dark:bg-emerald-200 dark:text-zinc-950 dark:hover:bg-emerald-100"
+                >
+                  {header.primary}
+                </button>
+                <button
+                  type="button"
+                  data-melius-ui-id="hero-secondary-action"
+                  data-melius-ui-role="button"
+                  onClick={onSecondary}
+                  className="inline-flex min-h-10 items-center justify-center rounded-md border border-zinc-950/[0.18] bg-transparent px-4 py-2 text-sm font-black text-zinc-900 transition hover:border-emerald-800 hover:bg-emerald-950/[0.05] dark:border-white/[0.18] dark:text-white dark:hover:bg-white/[0.08]"
+                >
+                  {header.secondary}
+                </button>
+              </div>
             </div>
-          ))}
+
+            <div data-melius-ui-id="hero-status-panel" data-melius-ui-role="status" className="grid border border-zinc-950/[0.12] dark:border-white/[0.10]">
+              {metrics.map((metric, index) => (
+                <div key={metric.id} data-melius-ui-id={`hero-metric-${index + 1}`} data-melius-ui-role="metric" className="grid grid-cols-[minmax(0,1fr)_auto] gap-3 border-b border-zinc-950/[0.10] px-4 py-3 last:border-b-0 dark:border-white/[0.08]">
+                  <div className="min-w-0">
+                    <div className="text-xs font-black uppercase tracking-[0.13em] text-zinc-500 dark:text-zinc-400">{metric.label}</div>
+                    <div className="mt-1 text-2xl font-black leading-none text-zinc-950 dark:text-white">{metric.value}</div>
+                  </div>
+                  <div className={index === 2 ? 'self-start rounded-sm bg-rose-100 px-2 py-1 text-xs font-black text-rose-800 dark:bg-rose-300/[0.14] dark:text-rose-200' : 'self-start rounded-sm bg-emerald-100 px-2 py-1 text-xs font-black text-emerald-800 dark:bg-emerald-300/[0.14] dark:text-emerald-200'}>
+                    {metric.note}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1448,16 +1475,21 @@ function KpiCard({
 }) {
   return (
     <CardSurface data-melius-ui-id={`kpi-card-${kpi.id}`} data-melius-ui-role="metric">
-      <button type="button" onClick={onOpen} className="block w-full p-4 text-left">
-        <div className="flex items-center justify-between gap-3">
+      <button type="button" onClick={onOpen} className="grid w-full grid-cols-[auto_minmax(0,1fr)] gap-4 p-4 text-left">
+        <div className="flex flex-col items-center gap-3">
           <ToneIcon tone={kpi.tone} icon={kpi.icon} />
-          <TrendBadge trend={kpi.trend} value={kpi.change} />
+          <span className="h-full w-px bg-zinc-950/[0.10] dark:bg-white/[0.10]" />
         </div>
-        <div className="mt-4">
-          <div className="text-xs font-bold uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400">{kpi.label[language]}</div>
-          <div className="mt-1 text-2xl font-black text-zinc-950 dark:text-white">{kpi.value[language]}</div>
+        <div className="min-w-0">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <div className="text-xs font-black uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400">{kpi.label[language]}</div>
+              <div className="mt-1 whitespace-nowrap text-2xl font-black text-zinc-950 dark:text-white sm:text-3xl">{kpi.value[language]}</div>
+            </div>
+            <TrendBadge trend={kpi.trend} value={kpi.change} />
+          </div>
+          <p className="mt-3 line-clamp-2 text-sm font-medium leading-5 text-zinc-500 dark:text-zinc-400">{kpi.detail[language]}</p>
         </div>
-        <p className="mt-3 line-clamp-2 text-sm font-medium leading-5 text-zinc-500 dark:text-zinc-400">{kpi.detail[language]}</p>
       </button>
     </CardSurface>
   );
@@ -1725,19 +1757,19 @@ function InspectorPanel({
     <aside
       data-melius-ui-id="right-inspector"
       data-melius-ui-role="inspector"
-      className="inspector-enter sticky top-[4.5rem] hidden max-h-[calc(100vh-5.5rem)] overflow-hidden rounded-lg border border-zinc-950/[0.08] bg-white/[0.82] backdrop-blur-xl dark:border-white/[0.08] dark:bg-white/[0.055] xl:block"
+      className="inspector-enter sticky top-20 hidden max-h-[calc(100vh-6rem)] overflow-hidden rounded-md border border-zinc-950/[0.14] bg-[#ebe4d5]/[0.94] shadow-[0_1px_0_rgba(24,24,27,0.08)] dark:border-white/[0.10] dark:bg-[#1b1915] xl:block"
     >
-      <div className="thin-scrollbar max-h-[calc(100vh-5.5rem)] overflow-y-auto p-4">
-        <div className="flex items-start justify-between gap-3">
+      <div className="thin-scrollbar max-h-[calc(100vh-6rem)] overflow-y-auto p-4">
+        <div className="mb-4 flex items-start justify-between gap-3 border-b border-zinc-950/[0.14] pb-4 dark:border-white/[0.10]">
           <ToneIcon tone={panel.tone} icon={panel.icon} />
           <Badge>{panel.eyebrow}</Badge>
         </div>
-        <h2 className="mt-4 text-xl font-black leading-tight text-zinc-950 dark:text-white">{panel.title}</h2>
+        <h2 className="text-2xl font-black leading-tight text-zinc-950 dark:text-white">{panel.title}</h2>
         <p className="mt-2 text-sm font-medium leading-6 text-zinc-500 dark:text-zinc-400">{panel.body}</p>
 
         <div data-melius-ui-id="inspector-meta" data-melius-ui-role="details" className="mt-4 space-y-2">
           {panel.meta.map((item) => (
-            <div key={`${item.label}-${item.value}`} className="flex items-center justify-between gap-3 rounded-lg bg-zinc-950/[0.04] px-3 py-2 dark:bg-white/[0.06]">
+            <div key={`${item.label}-${item.value}`} className="flex items-center justify-between gap-3 border-b border-zinc-950/[0.10] px-1 py-2 last:border-b-0 dark:border-white/[0.08]">
               <span className="text-xs font-bold uppercase tracking-[0.10em] text-zinc-500 dark:text-zinc-400">{item.label}</span>
               <span className="text-sm font-black text-zinc-950 dark:text-white">{item.value}</span>
             </div>
@@ -1781,9 +1813,9 @@ function DetailModal({
   onSecondary: () => void;
 }) {
   return (
-    <div data-melius-ui-id="detail-modal-overlay" data-melius-ui-role="dialog" className="fixed inset-0 z-50 grid place-items-center bg-zinc-950/45 p-4 backdrop-blur-sm">
-      <div className="modal-enter w-full max-w-2xl overflow-hidden rounded-lg border border-zinc-950/[0.10] bg-white shadow-2xl shadow-zinc-950/25 dark:border-white/[0.10] dark:bg-zinc-950">
-        <div className="flex items-start justify-between gap-4 border-b border-zinc-950/[0.08] p-5 dark:border-white/[0.08]">
+    <div data-melius-ui-id="detail-modal-overlay" data-melius-ui-role="dialog" className="fixed inset-0 z-50 grid place-items-center bg-zinc-950/50 p-4 backdrop-blur-sm">
+      <div className="modal-enter w-full max-w-3xl overflow-hidden rounded-md border border-zinc-950/[0.16] bg-[#fbfaf5] shadow-2xl shadow-zinc-950/25 dark:border-white/[0.10] dark:bg-[#171612]">
+        <div className="flex items-start justify-between gap-4 border-b border-zinc-950/[0.12] bg-[#ebe4d5] p-5 dark:border-white/[0.08] dark:bg-white/[0.04]">
           <div className="flex min-w-0 items-start gap-3">
             <ToneIcon tone={panel.tone} icon={panel.icon} />
             <div className="min-w-0">
@@ -1799,7 +1831,7 @@ function DetailModal({
           <p className="text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">{panel.body}</p>
           <div data-melius-ui-id="detail-modal-meta" data-melius-ui-role="details" className="mt-5 grid gap-3 sm:grid-cols-3">
             {panel.meta.map((item) => (
-              <div key={`${item.label}-${item.value}`} className="rounded-lg border border-zinc-950/[0.08] bg-zinc-50 p-3 dark:border-white/[0.08] dark:bg-white/[0.05]">
+              <div key={`${item.label}-${item.value}`} className="rounded-md border border-zinc-950/[0.12] bg-white/[0.56] p-3 dark:border-white/[0.08] dark:bg-white/[0.05]">
                 <div className="text-xs font-bold uppercase tracking-[0.10em] text-zinc-500 dark:text-zinc-400">{item.label}</div>
                 <div className="mt-1 font-black text-zinc-950 dark:text-white">{item.value}</div>
               </div>
@@ -2491,7 +2523,7 @@ export default function App() {
             <IconButton dataId="mobile-menu-button" roleName="button" label={copy.openSidebar} onClick={() => setSidebarOpen(true)}>
               <Menu className="h-5 w-5" aria-hidden="true" />
             </IconButton>
-            <div data-melius-ui-id="topbar-tab-list" data-melius-ui-role="tabs" className="hidden min-w-0 items-center rounded-lg border border-zinc-950/[0.08] bg-zinc-950/[0.04] p-1 dark:border-white/[0.08] dark:bg-white/[0.05] md:flex">
+            <div data-melius-ui-id="topbar-tab-list" data-melius-ui-role="tabs" className="hidden min-w-0 items-center border-l border-zinc-950/[0.14] pl-2 dark:border-white/[0.12] md:flex">
               {tabs.map((tab) => (
                 <TabButton key={tab} dataId={`top-tab-${tab}`} roleName="tab" selected={activeTab === tab} onClick={() => setActiveTab(tab)}>
                   {copy.tabs[tab]}
@@ -2521,7 +2553,7 @@ export default function App() {
           </WorkspaceHeader>
 
           <div className="md:hidden">
-            <div data-melius-ui-id="mobile-tab-list" data-melius-ui-role="tabs" className="thin-scrollbar flex gap-1 overflow-x-auto border-b border-zinc-950/[0.08] bg-white/[0.68] px-3 py-2 dark:border-white/[0.08] dark:bg-zinc-950/[0.72]">
+            <div data-melius-ui-id="mobile-tab-list" data-melius-ui-role="tabs" className="thin-scrollbar flex gap-1 overflow-x-auto border-b border-zinc-950/[0.12] bg-[#f8f6ef]/[0.92] px-3 py-2 dark:border-white/[0.08] dark:bg-[#141310]/[0.86]">
               {tabs.map((tab) => (
                 <TabButton key={tab} dataId={`mobile-tab-${tab}`} roleName="tab" selected={activeTab === tab} onClick={() => setActiveTab(tab)}>
                   {copy.tabs[tab]}
@@ -2531,7 +2563,7 @@ export default function App() {
           </div>
 
           <main data-melius-ui-id="workspace-main" data-melius-ui-role="main" className="thin-scrollbar min-h-0 flex-1 overflow-y-auto">
-            <div className="grid gap-5 p-4 lg:p-5 xl:grid-cols-[minmax(0,1fr)_20rem]">
+            <div className="grid gap-5 p-4 lg:p-5 xl:grid-cols-[minmax(0,1fr)_24rem]">
               <div className="min-w-0 space-y-5">
                 <WorkspaceHero
                   tab={activeTab}
