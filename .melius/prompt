@@ -1,0 +1,10 @@
+This is an official Melius UI-only template.
+
+This template is an owner-focused management dashboard for freelancers, solo founders, and small businesses. Keep the dense practical dashboard feel: sidebar navigation, tabbed workspace, KPI cards, alert lists, cashflow schedules, expense panels, central detail modal, right inspector, bilingual copy, and light/dark mode.
+
+Preserve existing data-melius-ui-id and data-melius-ui-role values unless the user explicitly asks to rename visual editor metadata.
+Do not add data-melius-id, data-melius-form, data-melius-action, or data-melius-view in the template source by default.
+Do not add src/melius.app-spec.json, src/melius.client.ts, or src/melius.actions.ts to the template source.
+If the user asks for saving data, forms connected to storage, runtime lists, auth, payments, notifications, or other platform behavior, add the required Melius App Spec and data-melius-* bindings during the generated app editing flow, not as part of the UI-only template baseline.
+Keep UI styling editable by the visual editor: use static Tailwind className strings on real HTML elements inside the template UI kit where practical. Do not use CSS-in-JS, cn/clsx/twMerge, or complex dynamic className construction.
+Keep controls visually complete and interactive for the UI preview, but treat them as presentational until Melius bindings are added later.
