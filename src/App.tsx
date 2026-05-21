@@ -1202,6 +1202,7 @@ function SidebarContent({
   copy,
   language,
   activeTab,
+  activeChildIndex,
   expandedItems,
   idPrefix,
   onSelectTab,
@@ -1212,9 +1213,10 @@ function SidebarContent({
   copy: AppCopy;
   language: Language;
   activeTab: TabId;
+  activeChildIndex: Partial<Record<TabId, number>>;
   expandedItems: Record<string, boolean>;
   idPrefix: 'desktop-nav' | 'mobile-nav';
-  onSelectTab: (tab: TabId) => void;
+  onSelectTab: (tab: TabId, childIndex?: number) => void;
   onToggleExpanded: (id: string) => void;
   onUtilityAction: (title: string, body: string, icon?: LucideIcon) => void;
   onCloseMobile?: () => void;
@@ -1259,6 +1261,7 @@ function SidebarContent({
             const children = sidebarCopy.children ?? [];
             const badge = 'badge' in sidebarCopy ? sidebarCopy.badge : null;
             const title = sidebarCopy.title;
+            const groupOpen = children.length > 0 && (expandedItems[item.id] || selected);
 
             return (
               <div key={item.id}>
@@ -1282,39 +1285,44 @@ function SidebarContent({
                     {badge ? <Badge>{badge}</Badge> : null}
                     {children.length > 0 ? (
                       <ChevronDown
-                        className={expandedItems[item.id] ? 'h-4 w-4 rotate-180 transition-transform' : 'h-4 w-4 transition-transform'}
+                        className={groupOpen ? 'h-4 w-4 rotate-180 transition-transform' : 'h-4 w-4 transition-transform'}
                         aria-hidden="true"
                       />
                     ) : null}
                   </span>
                 </RowButton>
 
-                {children.length > 0 && expandedItems[item.id] ? (
+                {groupOpen ? (
                   <div
                     data-melius-ui-id={`${idPrefix}-${item.id}-children`}
                     data-melius-ui-role="navigation-group"
                     className="ml-5 mt-1 space-y-1 border-l border-zinc-950/[0.12] pl-3 dark:border-white/[0.12]"
                   >
-                    {children.map((child, childIndex) => (
-                      <button
-                        key={child}
-                        type="button"
-                        data-melius-ui-id={`${idPrefix}-${item.id}-child-${childIndex + 1}`}
-                        data-melius-ui-role="navigation-item"
-                        onClick={() => {
-                          onSelectTab(item.id);
-                          onUtilityAction(
-                            `${title} / ${child}`,
-                            localized(language, `${child} is ready in the business inspector.`, `${child} を経営インスペクターに表示しました。`),
-                            Icon,
-                          );
-                          onCloseMobile?.();
-                        }}
-                        className="block w-full rounded-md px-3 py-2 text-left text-sm font-semibold text-zinc-600 transition-colors hover:bg-zinc-950/[0.06] hover:text-zinc-950 dark:text-stone-400 dark:hover:bg-white/[0.08] dark:hover:text-white"
-                      >
-                        {child}
-                      </button>
-                    ))}
+                    {children.map((child, childIndex) => {
+                      const childSelected = selected && activeChildIndex[item.id] === childIndex;
+
+                      return (
+                        <button
+                          key={child}
+                          type="button"
+                          data-melius-ui-id={`${idPrefix}-${item.id}-child-${childIndex + 1}`}
+                          data-melius-ui-role="navigation-item"
+                          aria-pressed={childSelected}
+                          onClick={() => {
+                            onSelectTab(item.id, childIndex);
+                            onCloseMobile?.();
+                          }}
+                          className={[
+                            'block w-full rounded-md px-3 py-2 text-left text-sm font-semibold transition-colors',
+                            childSelected
+                              ? 'bg-zinc-950 text-white shadow-sm dark:bg-white dark:text-zinc-950'
+                              : 'text-zinc-600 hover:bg-zinc-950/[0.06] hover:text-zinc-950 dark:text-stone-400 dark:hover:bg-white/[0.08] dark:hover:text-white',
+                          ].join(' ')}
+                        >
+                          {child}
+                        </button>
+                      );
+                    })}
                   </div>
                 ) : null}
               </div>
@@ -2305,6 +2313,14 @@ export default function App() {
   const [notice, setNotice] = useState<NoticeState | null>(null);
 
   const copy = COPY[language];
+  const activeChildIndex = useMemo<Partial<Record<TabId, number>>>(
+    () => ({
+      revenue: revenueFilter === 'services' ? 1 : revenueFilter === 'customers' ? 2 : 0,
+      cashflow: cashflowWindow === '30' ? 0 : cashflowWindow === '60' ? 1 : 2,
+      expenses: expenseFilter === 'fixed' ? 1 : expenseFilter === 'variable' ? 2 : 0,
+    }),
+    [cashflowWindow, expenseFilter, revenueFilter],
+  );
   const [inspectorPanel, setInspectorPanel] = useState<DetailPanel>(() => getDefaultPanel('overview', COPY.en, 'en'));
   const [modalPanel, setModalPanel] = useState<DetailPanel | null>(null);
 
@@ -2384,6 +2400,27 @@ export default function App() {
 
   const toggleExpanded = (id: string) => {
     setExpandedItems((current) => ({ ...current, [id]: !current[id] }));
+  };
+
+  const navigateFromSidebar = (tab: TabId, childIndex?: number) => {
+    setActiveTab(tab);
+
+    if (tab === 'revenue') {
+      setRevenueFilter(childIndex === 1 ? 'services' : childIndex === 2 ? 'customers' : 'all');
+    }
+
+    if (tab === 'cashflow') {
+      setCashflowWindow(childIndex === 0 ? '30' : childIndex === 1 ? '60' : '90');
+    }
+
+    if (tab === 'expenses') {
+      setExpenseFilter(childIndex === 1 ? 'fixed' : childIndex === 2 ? 'variable' : 'all');
+    }
+
+    if (tab === 'overview') {
+      setRevenueFilter('all');
+      setExpenseFilter('all');
+    }
   };
 
   const toggleAlert = (id: string) => {
@@ -2489,9 +2526,10 @@ export default function App() {
             copy={copy}
             language={language}
             activeTab={activeTab}
+            activeChildIndex={activeChildIndex}
             expandedItems={expandedItems}
             idPrefix="desktop-nav"
-            onSelectTab={setActiveTab}
+            onSelectTab={navigateFromSidebar}
             onToggleExpanded={toggleExpanded}
             onUtilityAction={openUtilityPanel}
           />
@@ -2507,9 +2545,10 @@ export default function App() {
                 copy={copy}
                 language={language}
                 activeTab={activeTab}
+                activeChildIndex={activeChildIndex}
                 expandedItems={expandedItems}
                 idPrefix="mobile-nav"
-                onSelectTab={setActiveTab}
+                onSelectTab={navigateFromSidebar}
                 onToggleExpanded={toggleExpanded}
                 onUtilityAction={openUtilityPanel}
                 onCloseMobile={() => setSidebarOpen(false)}
@@ -2523,12 +2562,11 @@ export default function App() {
             <IconButton dataId="mobile-menu-button" roleName="button" label={copy.openSidebar} onClick={() => setSidebarOpen(true)}>
               <Menu className="h-5 w-5" aria-hidden="true" />
             </IconButton>
-            <div data-melius-ui-id="topbar-tab-list" data-melius-ui-role="tabs" className="hidden min-w-0 items-center border-l border-zinc-950/[0.14] pl-2 dark:border-white/[0.12] md:flex">
-              {tabs.map((tab) => (
-                <TabButton key={tab} dataId={`top-tab-${tab}`} roleName="tab" selected={activeTab === tab} onClick={() => setActiveTab(tab)}>
-                  {copy.tabs[tab]}
-                </TabButton>
-              ))}
+            <div data-melius-ui-id="topbar-current-view" data-melius-ui-role="status" className="hidden min-w-0 border-l border-zinc-950/[0.14] pl-4 dark:border-white/[0.12] md:block">
+              <div className="text-xs font-black uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-400">
+                {localized(language, 'Current view', '現在の画面')}
+              </div>
+              <div className="truncate text-sm font-black text-zinc-950 dark:text-white">{copy.tabs[activeTab]}</div>
             </div>
             <div className="min-w-0 flex-1">
               <SearchInput
@@ -2555,7 +2593,7 @@ export default function App() {
           <div className="md:hidden">
             <div data-melius-ui-id="mobile-tab-list" data-melius-ui-role="tabs" className="thin-scrollbar flex gap-1 overflow-x-auto border-b border-zinc-950/[0.12] bg-[#f8f6ef]/[0.92] px-3 py-2 dark:border-white/[0.08] dark:bg-[#141310]/[0.86]">
               {tabs.map((tab) => (
-                <TabButton key={tab} dataId={`mobile-tab-${tab}`} roleName="tab" selected={activeTab === tab} onClick={() => setActiveTab(tab)}>
+                <TabButton key={tab} dataId={`mobile-tab-${tab}`} roleName="tab" selected={activeTab === tab} onClick={() => navigateFromSidebar(tab)}>
                   {copy.tabs[tab]}
                 </TabButton>
               ))}
